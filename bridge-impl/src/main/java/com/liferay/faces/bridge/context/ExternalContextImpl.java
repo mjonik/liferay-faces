@@ -35,6 +35,7 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.StateAwareResponse;
 import javax.portlet.faces.BridgeWriteBehindResponse;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponseWrapper;
 
 import com.liferay.faces.bridge.application.ViewHandlerImpl;
@@ -48,6 +49,7 @@ import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
 import com.liferay.faces.util.product.ProductConstants;
 import com.liferay.faces.util.product.ProductMap;
+import com.liferay.portal.util.PortalUtil;
 
 
 /**
@@ -691,7 +693,9 @@ public class ExternalContextImpl extends ExternalContextCompat_2_2_Impl {
 	 */
 	@Override
 	public Object getSession(boolean create) {
-		return portletRequest.getPortletSession(create);
+		PortletSession ps = portletRequest.getPortletSession(create);
+		HttpServletRequest httpreq1 = PortalUtil.getHttpServletRequest(portletRequest);
+		return httpreq1.getSession();
 	}
 
 	@Override
